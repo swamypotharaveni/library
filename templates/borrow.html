@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+
+        <div class="alert-heading ">Borrowing</div>
+        <form action="" method="post">
+            {% csrf_token %}
+
+               <select class="form-control" name="student_id" id="student">
+                    {% for s in student %}
+    <option value="{{ s.id }}">{{ s.s_firstname }}</option>
+{% endfor %}
+  </select>
+         <div class="form-group pull-right">
+                <button name="save_borrow" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>
+                    Borrow
+                </button>
+            </div>
+            <table id="table" class="table table-stripped">
+                <thead class="alert-success">
+                <tr>
+                    <th>Select</th>
+                    <th>Book Title</th>
+                    <th>Book Category</th>
+                    <th>Book Author</th>
+                    <th>Available</th>
+                    <th>Left</th>
+                </tr>
+                </thead>
+             {% for book,data1 in data %}
+                <tbody>
+                <tr>
+                    <td>
+                    {% if data1 == 0 %}
+                        <label class="text-danger">Not Available</label>
+                        {% else %}
+                          <input type="hidden"name="book_id" value="{{ book.id }}">
+                        <input type="checkbox" name="select" value="{{ book.id }}" id="">
+
+                    {% endif %}
+
+                    </td>
+                   <td>{{book.title}}</td>
+                        <td>{{ book.category.all.0.title}}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.available }}</td>
+                    <td>
+                    {% if data1 == 0 %}
+                        <label class="text-danger">Not Available</label>
+                        {% else %}
+                    {{ data1 }}
+                    {% endif %}
+
+                    </td>
+
+                        {% endfor %}
+
+
+                </tr>
+                </tbody>
+            </table>
+
+
+
+
+
+        </form>
+
+
+    </div>
+
+{% endblock %}
